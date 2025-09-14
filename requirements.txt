@@ -1,6 +1,7 @@
 streamlit
 pandas
-pdfplumber
-openpyxl
-PyPDF2
 numpy
+pdfplumber
+PyPDF2
+openpyxl
+PyMuPDF
