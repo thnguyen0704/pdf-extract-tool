@@ -23,7 +23,8 @@ if uploaded_files and invoice_input:
         "PO#": None,
         "Booking Number": None,
         "Material #": None,
-        "PO Line Item Seq. #": None
+        "PO Line Item Seq. #": None,
+        "VGM Link": None
     } for inv in invoice_list}
 
     file_buffers = [(f.name, f.read()) for f in uploaded_files]
@@ -42,6 +43,19 @@ if uploaded_files and invoice_input:
                             if not invoice_status[invoice]["File Name"]:
                                 invoice_status[invoice]["File Name"] = file_name
                                 invoice_status[invoice]["PDF Page"] = page_num + 1
+
+                    # BOOKING
+                    if "KN BOOKING CONFIRMATION" in text:
+                        if re.search(rf"\b{re.escape(invoice)}\b", text):
+                            vgm_links = re.findall(r"https://vgm\.[^\s]+", text)
+                            if vgm_links:
+                                joined_links = ", ".join(sorted(set(vgm_links)))
+                                inv_data = invoice_status[invoice]
+                                if not inv_data["VGM Link"]:
+                                        inv_data["VGM Link"] = joined_links
+                                        invoice_status[invoice]["File Name"] = file_name
+                                        invoice_status[invoice]["PDF Page"] = page_num + 1
+                                    
 
                     # FACTORY COMMERCIAL INVOICE
                     if "Factory Commercial Invoice" in text and invoice in text:
