@@ -71,7 +71,7 @@ if uploaded_files and invoice_input:
                             "Carton Number": r"Total Number of Cartons[:\s]*([\d,]+)",
                             "Total Amount": r"Total Amount[:\s]*([\d,]+\.\d{2})",
                             "Reference PO": r"Reference PO#?:\s*(\d{10})",
-                            "PO#": r"(?<!\d)(\d{10})(?!\d)",
+                            "PO#": r"(?<![A-Za-z0-9])(\d{10})(?!\d)"
                             "Booking Number": r"Booking Number:\s*([A-Z0-9]+)"
                         }
                         for field, pattern in patterns.items():
