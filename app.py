@@ -24,6 +24,7 @@ if uploaded_files and invoice_input:
         "Booking Number": None,
         "Material #": None,
         "PO Line Item Seq. #": None,
+        "Invoice Date": None,
         "VGM Link": None
     } for inv in invoice_list}
 
@@ -60,6 +61,23 @@ if uploaded_files and invoice_input:
                     # FACTORY COMMERCIAL INVOICE
                     if "Factory Commercial Invoice" in text and invoice in text:
                         inv_data = invoice_status[invoice]
+
+                        for i, line in enumerate(lines):
+                            if invoice in line:
+                                # 1️⃣ kiểm tra cùng dòng
+                                after_invoice = line.split(invoice, 1)[1]
+                                date_match = re.search(r"((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})", after_invoice)
+                                if date_match:
+                                    inv_data["Invoice Date"] = date_match.group(1)
+                                    break
+
+                                # 2️⃣ kiểm tra dòng kế tiếp
+                                if i + 1 < len(lines):
+                                    next_line = lines[i + 1]
+                                    date_match = re.search(r"((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})", next_line)
+                                    if date_match:
+                                        inv_data["Invoice Date"] = date_match.group(1)
+                                        break
 
                         # Set file name and page only once
                         if not inv_data["File Name"]:
