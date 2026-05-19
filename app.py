@@ -25,7 +25,6 @@ if uploaded_files and invoice_input:
         "Material #": None,
         "PO Line Item Seq. #": None,
         "Invoice Date": None,
-        "Reference Invoice #": None,
         "VGM Link": None
     } for inv in invoice_list}
 
