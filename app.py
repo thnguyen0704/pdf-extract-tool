@@ -64,14 +64,14 @@ if uploaded_files and invoice_input:
 
                         for i, line in enumerate(lines):
                             if invoice in line:
-                                # 1️⃣ kiểm tra cùng dòng
+                                # kiểm tra cùng dòng
                                 after_invoice = line.split(invoice, 1)[1]
                                 date_match = re.search(r"((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})", after_invoice)
                                 if date_match:
                                     inv_data["Invoice Date"] = date_match.group(1)
                                     break
 
-                                # 2️⃣ kiểm tra dòng kế tiếp
+                                # kiểm tra dòng kế tiếp
                                 if i + 1 < len(lines):
                                     next_line = lines[i + 1]
                                     date_match = re.search(r"((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})", next_line)
@@ -90,7 +90,7 @@ if uploaded_files and invoice_input:
                             "Total Amount": r"Total Amount[:\s]*([\d,]+\.\d{2})",
                             "Reference PO": r"Reference PO#?:\s*(\d{10})",
                             "PO#": r"(?<![A-Za-z0-9])(\d{10})(?!\d)",
-                            "Booking Number:": r"Booking Number:\s*([A-Z0-9]+)"
+                            "Booking Number": r"Booking Number:\s*([A-Z0-9]+)",
                         }
                         for field, pattern in patterns.items():
                             match = re.search(pattern, text)
