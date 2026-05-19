@@ -25,6 +25,7 @@ if uploaded_files and invoice_input:
         "Material #": None,
         "PO Line Item Seq. #": None,
         "Invoice Date": None,
+        "Reference Invoice #": None,
         "VGM Link": None
     } for inv in invoice_list}
 
@@ -90,7 +91,8 @@ if uploaded_files and invoice_input:
                             "Total Amount": r"Total Amount[:\s]*([\d,]+\.\d{2})",
                             "Reference PO": r"Reference PO#?:\s*(\d{10})",
                             "PO#": r"(?<![A-Za-z0-9])(\d{10})(?!\d)",
-                            "Booking Number": r"Booking Number:\s*([A-Z0-9]+)"
+                            "Reference Invoice #": r"Booking Number:\s*([A-Z0-9]+)"
+                            "Booking Number": r"Reference Invoice #:\s*([A-Z0-9]+)"
                         }
                         for field, pattern in patterns.items():
                             match = re.search(pattern, text)
