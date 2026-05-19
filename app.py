@@ -91,7 +91,7 @@ if uploaded_files and invoice_input:
                             "Total Amount": r"Total Amount[:\s]*([\d,]+\.\d{2})",
                             "Reference PO": r"Reference PO#?:\s*(\d{10})",
                             "PO#": r"(?<![A-Za-z0-9])(\d{10})(?!\d)",
-                            "Reference Invoice #": r"Booking Number:\s*([A-Z0-9]+)",
+                            "SO #": r"Booking Number:\s*([A-Z0-9]+)",
                             "Booking Number": r"Reference Invoice #:\s*([A-Z0-9]+)"
                         }
                         for field, pattern in patterns.items():
