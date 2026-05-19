@@ -95,7 +95,7 @@ if uploaded_files and invoice_input:
                         }
                         for field, pattern in patterns.items():
                             match = re.search(pattern, text)
-                            if match and not inv_data.get.[field]:
+                            if match and not inv_data.[field]:
                                 inv_data[field] = match.group(1)
 
                         if inv_data["PO#"] == inv_data["Reference PO"]:
