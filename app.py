@@ -25,7 +25,9 @@ if uploaded_files and invoice_input:
         "Material #": None,
         "PO Line Item Seq. #": None,
         "Invoice Date": None,
-        "VGM Link": None
+        "VGM Link": None,
+        "KN No.": None,
+        "VAT Invoice No.": None
     } for inv in invoice_list}
 
     file_buffers = [(f.name, f.read()) for f in uploaded_files]
@@ -38,6 +40,33 @@ if uploaded_files and invoice_input:
                 lines = text.splitlines()
 
                 for invoice in invoice_list:
+                    # VAT INVOICE / HÓA ĐƠN GIÁ TRỊ GIA TĂNG
+                    if "HÓA ĐƠN GIÁ TRỊ GIA TĂNG" in text:
+                        # Only process the VAT invoice page matching the user's input invoice number
+                        if re.search(rf"(?<!\w){re.escape(invoice)}(?!\w)", text):
+                            inv_data = invoice_status[invoice]
+
+                            kn_match = re.search(
+                                r"Số\s+chứng\s+từ\s+nội\s+bộ\s*\(KN\s+No\.\)\s*:\s*([A-Za-z0-9]{10})",
+                                text,
+                                re.IGNORECASE
+                            )
+                            vat_invoice_match = re.search(
+                                r"Số\s+hóa\s+đơn\s*\(Invoice\s+No\.\)\s*:\s*(\d{5})",
+                                text,
+                                re.IGNORECASE
+                            )
+
+                            if kn_match and not inv_data["KN No."]:
+                                inv_data["KN No."] = kn_match.group(1)
+
+                            if vat_invoice_match and not inv_data["VAT Invoice No."]:
+                                inv_data["VAT Invoice No."] = vat_invoice_match.group(1)
+
+                            if not inv_data["File Name"]:
+                                inv_data["File Name"] = file_name
+                                inv_data["PDF Page"] = page_num + 1
+
                     # FORWARDER'S CERTIFICATE RECEIPT
                     if "FORWARDER'S CERTIFICATE RECEIPT" in text:
                         if re.search(rf"\b{re.escape(invoice)}\b", text):
