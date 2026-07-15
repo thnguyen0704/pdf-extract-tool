@@ -58,7 +58,7 @@ if uploaded_files and invoice_input:
                             )
 
                             if kn_match and not inv_data["KN No."]:
-                                inv_data["KN No."] = kn_match.group(1)
+                                inv_data["KN No."] = kn_match.group(0).upper()
 
                             if vat_invoice_match and not inv_data["VAT Invoice No."]:
                                 inv_data["VAT Invoice No."] = vat_invoice_match.group(1)
