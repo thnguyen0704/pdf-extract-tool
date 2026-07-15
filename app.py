@@ -47,7 +47,7 @@ if uploaded_files and invoice_input:
                             inv_data = invoice_status[invoice]
 
                             kn_match = re.search(
-                                r"Số\s+chứng\s+từ\s+nội\s+bộ\s*\(KN\s+No\.\)\s*:\s*(\S+)",
+                                 r"\b(?:HAN|SGN)\d{7}\b",
                                 text,
                                 re.IGNORECASE
                             )
