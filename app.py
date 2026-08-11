@@ -15,6 +15,7 @@ if uploaded_files and invoice_input:
     invoice_status = {inv: {
         "Invoice Number": inv,
         "File Name": None,
+        "VGM Link": None,
         "PDF Page": None,
         "Carton Number": None,
         "Quantity": None,
@@ -25,7 +26,6 @@ if uploaded_files and invoice_input:
         "Material #": None,
         "PO Line Item Seq. #": None,
         "Invoice Date": None,
-        "VGM Link": None,
         "KN No.": None,
         "VAT Invoice No.": None
     } for inv in invoice_list}
